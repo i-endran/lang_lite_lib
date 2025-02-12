@@ -10,7 +10,7 @@ response = (lite_chain
             .build_vector_store(LLMProvider.GOOGLE, constants.get_default_embedding(LLMProvider.GOOGLE))
             .prompt_rag("What is the latest news?"))
 
-print("\n\nResponse from LLM with RAG: ")
+print("\nResponse from LLM with RAG: ")
 print(response)
 
 # LLm chain with RAG (Retrieval Augmented Generation) and embedded input query.
