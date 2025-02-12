@@ -1,0 +1,6 @@
+__pycache__
+/dist
+/build
+/lite_venv
+/lang_lite.egg-info
+/.idea
