@@ -42,6 +42,22 @@ class SimpleRagChain(object):
         self.docs = docs if not self.docs else self.docs + docs
         return self
 
+    def add_context_text(self, file_path: str):
+        if not file_path:
+            raise ValueError("File path cannot be empty")
+
+        docs = io_util.load_documents_from_txt(file_path)
+        self.docs = docs if not self.docs else self.docs + docs
+        return self
+
+    def add_context_directory(self, file_path: str, recursive: bool = False, file_pattern: str | None = None):
+        if not file_path:
+            raise ValueError("File path cannot be empty")
+
+        docs = io_util.load_txt_documents_from_directory(file_path, recursive, file_pattern)
+        self.docs = docs if not self.docs else self.docs + docs
+        return self
+
     def add_context_docs(self, docs: List[Document]):
         self.docs = docs if not self.docs else self.docs + docs
         return self

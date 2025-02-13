@@ -32,10 +32,15 @@ from lang_lite import lite_chain
 
 ## Documentation
 ### lite_chain
-- `lite_chain` is a class that provides a simplified interface to the Langchain API. It is designed to be easy to use and understand, and is ideal for prototyping and testing.
+- `.\lang_lite\lite_chain` is a class that provides a simplified interface to the Langchain API. It is designed to be easy to use and understand, and is ideal for prototyping and testing.
 - `Example.py` demonstrates how to use the `lite_chain` class to interact with Langchain.
 
-# For contributers
+### langchain_converter
+- `.\langchain_converter.py` is a script used to convert Python code that uses `lite_chain` in the `lang_lite` library to actual LangChain code.
+- Test your ideas, prototype it and convert it to LangChain code using this script.
+- `output.py` contains the LangChain code generated from the `Example.py` file.
+
+# For contributors
 
 ## Modification
 
