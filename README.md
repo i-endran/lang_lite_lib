@@ -3,14 +3,27 @@
 Langchain Lite is a utility library designed to facilitate faster prototyping with Langchain. It provides tools for working with LLMs, vector stores, and other common needs.
 
 ## Installation
+To use this library, download the files from `downloads` directory and place them in your project directory.
+Open the terminal and navigate to the project directory and run the following command:
 
-To use this library, first build the wheel file using `pypa/build` (**Note:** Using a virtual environment is recommended. For more information, refer to the [Python documentation](https://docs.python.org/3/library/venv.html)) :
+```sh
+pip install -U lang_lite-<version>-py3-none-any.whl
+```
+
+
+To **compile the wheel file**, install the dependencies and build the package using the following commands.
+(**Note:** Using a virtual environment is recommended. For more information, refer to the [Python documentation](https://docs.python.org/3/library/venv.html)) :
+
+### Dependencies:
 
 ```sh
 pip install -U build
 pip install -U setuptools
 pip install -U wheel
 ```
+
+### Build the package:
+
 ```sh
 python -m build
 ```
