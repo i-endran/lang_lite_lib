@@ -1,13 +1,18 @@
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
-from langchain.document_loaders import WebBaseLoader
+from langchain_community.document_loaders import WebBaseLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
-from langchain.vectorstores import FAISS
+from langchain_community.vectorstores import FAISS
+
+"""
+`output.py` is the converted code from lang_lite library in `example.py` to LangChain code.
+Some of the outdated code has been updated to the latest LangChain code for reference.
+"""
 
 # Constants (replace with your actual values if different)
 GOOGLE = "google"  # Assuming this is how you identify Google in your constants
-DEFAULT_GOOGLE_LLM = "models/gemini-1.5-pro-latest"  # Replace with the actual model name
+DEFAULT_GOOGLE_LLM = "gemini-2.0-flash"  # Replace with the actual model name
 DEFAULT_GOOGLE_EMBEDDING = "models/embedding-001"  # Replace with the actual embedding model name
 
 # 1. LLM chain with RAG
@@ -50,20 +55,21 @@ qa_chain = RetrievalQA.from_chain_type(
 
 # Run chain
 query = "What is the latest news?"
-response = qa_chain({"query": query})
+response = qa_chain.invoke(f"query: {query}") #invoke must be used instead of qa_chain({})
 
 print("\nResponse from LLM with RAG: ")
 print(response["result"])
 
-print("\nResponse from LLM with RAG: ")
-print(response["result"])
+# only one print statement is in the example.py file
+# print("\nResponse from LLM with RAG: ")
+# print(response["result"])
 
 
 # 2. LLM chain with RAG and embedded input query (using retriever's search)
 # The previous RAG setup already created the vectorstore and embeddings.  We reuse them.
 
-# Run chain - using retriever directly to get context, then LLM to generate answer
-retrieved_docs = retriever.get_relevant_documents(query)
+# Run chain - using vector store directly to get context, then LLM to generate answer
+retrieved_docs = db.similarity_search_by_vector(embeddings.embed_query(query), k=5) # use similarity_search_by_vector instead of retrieve_documents
 context = "\n".join([doc.page_content for doc in retrieved_docs])
 
 prompt = f"""You are an AI assistant. Use the following context to answer the question.
@@ -80,8 +86,9 @@ response = llm.invoke(prompt)
 print("\n\nResponse from LLM with RAG and embedded query: ")
 print(response.content)
 
-print("\n\nResponse from LLM with RAG and embedded query: ")
-print(response.content)
+# only one print statement is in the example.py file
+# print("\n\nResponse from LLM with RAG and embedded query: ")
+# print(response.content)
 
 
 # 3. LLM chain without RAG

@@ -2,15 +2,20 @@ from typing import List
 from langchain.schema import Document
 import lang_lite.model_util as models
 import lang_lite.io_util as io_util
+import lang_lite.constants as lite_constants
 from lang_lite.vector_util import FAISSVectorStoreUtil as vs
 from lang_lite.constants import LLMProvider
 
 
 class SimpleRagChain(object):
-    def __init__(self, llm_provider: LLMProvider, model_name: str, temperature: float = 0.3):
+    def __init__(self, llm_provider: LLMProvider, model_name: str = None, temperature: float = 0.3):
         self.docs: List[Document] = []
         self.vector_store = None
         self.embedding_model = None
+
+        if model_name is None:
+            model_name = lite_constants.get_default_llm(llm_provider)
+
         self.llm = models.get_llm(llm_provider, model_name, temperature)
         self.role = "You are an AI assistant"
 
@@ -62,11 +67,14 @@ class SimpleRagChain(object):
         self.docs = docs if not self.docs else self.docs + docs
         return self
 
-    def build_vector_store(self, embedding_model_type: LLMProvider, embedding_model_name: str, chunk_size: int = 1000,
+    def build_vector_store(self, embedding_model_type: LLMProvider, embedding_model_name: str = None, chunk_size: int = 1000,
                            chunk_overlap: int = 200):
 
         if not self.docs:
             raise ValueError("Documents list cannot be empty, add some context documents first")
+
+        if embedding_model_name is None:
+            embedding_model_name = lite_constants.get_default_embedding(embedding_model_type)
 
         self.embedding_model = models.get_embeddings(embedding_model_type, embedding_model_name)
         self.vector_store = vs(self.embedding_model, self.docs, chunk_size, chunk_overlap).get_vector_store()

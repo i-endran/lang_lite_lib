@@ -38,7 +38,7 @@ from lang_lite import lite_chain
 ### langchain_converter
 - `.\langchain_converter.py` is a script used to convert Python code that uses `lite_chain` in the `lang_lite` library to actual LangChain code.
 - Test your ideas, prototype it and convert it to LangChain code using this script.
-- `output.py` contains the LangChain code generated from the `Example.py` file.
+- `output_example.py` contains the LangChain code generated from the `Example.py` file.
 
 # For contributors
 
